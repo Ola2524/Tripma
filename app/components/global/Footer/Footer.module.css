@@ -2,6 +2,14 @@
   padding: 60px 120px 0;
 }
 
+.footer a {
+  transition: 0.3s all ease-in-out;
+}
+
+.footer a:hover {
+  color: var(--main-color);
+}
+
 .upper_footer {
   display: flex;
   justify-content: space-between;
