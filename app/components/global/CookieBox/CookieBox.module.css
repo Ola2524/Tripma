@@ -1,0 +1,52 @@
+.cookiebox {
+  background-color: #f6f6fe;
+  border: 1px solid var(--main-color);
+  padding: 16px 24px;
+  position: fixed;
+  left: 50px;
+  bottom: 50px;
+  border-radius: 8px;
+  width: 300px;
+}
+
+.close_btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: transparent;
+  color: var(--main-color);
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.cookiebox p {
+  color: var(--main-color);
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 24.55px;
+}
+
+.option_btns {
+    display: flex;
+    margin-top: 12px;
+}
+
+.accept_btn, 
+.setting_btn {
+    padding: 8.5px 16px;
+    cursor: pointer;
+}
+
+.accept_btn {
+    background-color: var(--main-color);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+}
+
+.setting_btn {
+    color: var(--main-color);
+    border: none;
+    background: transparent;
+}
