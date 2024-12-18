@@ -1,8 +1,8 @@
 import styles from "./Testimonials.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
-import { faStar as faStarOutline } from '@fortawesome/free-regular-svg-icons';
-import { cities, countries, reviews } from "@/dummy_data";
+import { faStar as faStarOutline } from "@fortawesome/free-regular-svg-icons";
+import { cities, countries, reviews } from "@/lib/dummy_data";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -33,7 +33,9 @@ export default function Testimonials() {
                     />
                   ))}
                 </div>
-                <p>{review.message} <Link href="#">read more</Link></p>
+                <p>
+                  {review.message} <Link href="#">read more</Link>
+                </p>
               </div>
             </div>
           ))}

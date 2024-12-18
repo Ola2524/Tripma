@@ -1,0 +1,13 @@
+.second_filter {
+    margin-top: 24px;
+}
+
+.second_filter select {
+  color: #7c8db0;
+  font-size: 18px;
+  font-weight: 400;
+  border: 1px solid #cbd4e6;
+  background-color: #fff;
+  padding: 10px 20px 10px 10px;
+  margin-right: 16px;
+}

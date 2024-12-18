@@ -28,25 +28,34 @@
 }
 
 .option_btns {
-    display: flex;
-    margin-top: 12px;
+  display: flex;
+  margin-top: 12px;
 }
 
-.accept_btn, 
+.accept_btn,
 .setting_btn {
-    padding: 8.5px 16px;
-    cursor: pointer;
+  padding: 8.5px 16px;
+  cursor: pointer;
 }
 
 .accept_btn {
-    background-color: var(--main-color);
-    color: #fff;
-    border: none;
-    border-radius: 4px;
+  background-color: var(--main-color);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
 }
 
 .setting_btn {
-    color: var(--main-color);
-    border: none;
-    background: transparent;
+  color: var(--main-color);
+  border: none;
+  background: transparent;
+}
+
+@media (max-width: 767px) {
+  .cookiebox {
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: 100%;
+  }
 }

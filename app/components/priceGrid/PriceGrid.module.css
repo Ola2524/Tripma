@@ -1,0 +1,44 @@
+.price_grid h4 {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 24.55px;
+  text-align: left;
+  color: #6e7491;
+  margin-bottom: 16px;
+}
+
+.price_grid table {
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #e9e8fc;
+}
+
+.price_grid table,
+.price_grid td,
+.price_grid th {
+  border: 1px solid #e9e8fc;
+}
+
+.price_grid td,
+.price_grid th {
+  padding: 10px 20px;
+}
+
+.price_grid th,
+.price_grid tr td:first-child {
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 16.37px;
+  text-align: center;
+  color: #000;
+}
+
+.price_grid td {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 19.1px;
+  text-align: center;
+  color: #6e7491;
+}

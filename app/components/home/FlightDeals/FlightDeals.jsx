@@ -2,7 +2,7 @@ import styles from "./FlightDeals.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
-import { hotels } from "@/dummy_data";
+import { hotels } from "@/lib/dummy_data";
 
 export default function FlightDeals() {
   return (
@@ -18,7 +18,10 @@ export default function FlightDeals() {
       <div className={styles.hotels_wrapper}>
         {hotels.map((hotel) => (
           <div className={styles.hotel_card}>
-            <div className={styles.image} style={{ backgroundImage: `url('/images/${hotel.img}')` }}></div>
+            <div
+              className={styles.image}
+              style={{ backgroundImage: `url('/images/${hotel.img}')` }}
+            ></div>
             <div className={styles.content}>
               <div className={styles.card_title}>
                 <h3>{hotel.name}</h3>

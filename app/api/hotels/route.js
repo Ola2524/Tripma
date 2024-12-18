@@ -1,4 +1,4 @@
-import { hotels } from "@/dummy_data";
+import { hotels } from "@/lib/dummy_data";
 
 export async function GET(request) {
   const { searchParams } = new URL(request.url);

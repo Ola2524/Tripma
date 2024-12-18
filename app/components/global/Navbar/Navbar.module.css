@@ -28,3 +28,18 @@
   color: #fff;
   padding: 13px 20px;
 }
+
+.navbar .toggleBtn {
+  background-color: #fff;
+  border: 2px solid var(--main-color);
+  padding: 0px 20px;
+  color: var(--main-color);
+  border-radius: 4px;
+  display: none;
+}
+
+@media (max-width: 576px) {
+  .navbar ul.links {
+    display: none;
+  }
+}

@@ -2,7 +2,7 @@ import styles from "./PlacesToStay.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
-import { hotels } from "@/dummy_data";
+import { hotels } from "@/lib/dummy_data";
 
 export default function FlightDeals() {
   return (
@@ -30,9 +30,7 @@ export default function FlightDeals() {
         ))}
       </div>
       <div className={styles.explore_btn}>
-        <Link href="#">
-          Explore more stays
-        </Link>
+        <Link href="#">Explore more stays</Link>
       </div>
     </div>
   );

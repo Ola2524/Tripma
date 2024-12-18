@@ -1,0 +1,70 @@
+.flight_list h4 {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 24.55px;
+  color: #6e7491;
+  margin-bottom: 50px;
+}
+
+.flight_list h4 span {
+  color: var(--main-color);
+}
+
+.flight_list table {
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #e9e8fc;
+  padding: 16px 0;
+}
+
+.flight_list table tr {
+  cursor: pointer;
+  transition: 0.5s all ease-in-out;
+}
+
+.flight_list table td {
+  padding: 12px 24px;
+}
+
+.flight_list table td p:first-child {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 21.82px;
+  color: #27273f;
+}
+
+.flight_list table td p:last-child {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 21.82px;
+  text-align: left;
+  color: #7c8db0;
+}
+
+.flight_list tr:hover {
+  background-color: #f6f6fe;
+}
+
+.flight_list table tr:not(:last-child) td {
+  border-bottom: 1px solid #e9e8fc;
+}
+
+.flight_list table tr td:first-child,
+.flight_list table tr td:last-child {
+  padding: 0 32px;
+}
+
+.show_all_btn {
+  padding: 11.5px 20px;
+  border: 1px solid var(--main-color);
+  background-color: #fff;
+  color: var(--main-color);
+  transition: 0.5s all ease-in-out;
+  margin-top: 24px;
+}
+
+.show_all_btn:hover {
+  background-color: var(--main-color);
+}

@@ -1,7 +1,7 @@
-import OfferBar from "@/app/components/global/Offerbar/Offerbar";
-import Navbar from "@/app/components/global/Navbar/Navbar";
-import Footer from "@/app/components/global/Footer/Footer";
-import CookieBox from "@/app/components/global/CookieBox/CookieBox";
+import OfferBar from "@/app/components/global/offerbar/Offerbar";
+import Navbar from "@/app/components/global/navbar/Navbar";
+import Footer from "@/app/components/global/footer/Footer";
+import CookieBox from "@/app/components/global/cookieBox/CookieBox";
 import { Nunito_Sans } from "next/font/google";
 import "@/styles/globals.css";
 

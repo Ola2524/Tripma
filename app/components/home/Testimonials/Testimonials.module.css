@@ -64,3 +64,10 @@
     width: 18px;
     height: 18px;
 }
+
+@media (max-width: 991px) {
+  .reviews_wrapper {
+    flex-wrap: wrap;
+    gap: 50px;
+  }
+}
