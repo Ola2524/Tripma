@@ -1,14 +1,20 @@
-import styles from "./Button.module.css";
+import buttonStyles from "./Button.module.css";
 
-export default function Button({ text, customStyle, action, className }) {
+export default function Button({
+  children,
+  customStyle,
+  action,
+  className,
+  type,
+}) {
   return (
     <button
-      type="button"
+      type={type}
       onClick={action}
-      className={`${styles.btn} ${styles.className}`}
+      className={`${buttonStyles.btn} ${className || ""}`}
       style={customStyle}
     >
-      {text}
+      {children}
     </button>
   );
 }

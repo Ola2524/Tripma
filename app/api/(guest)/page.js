@@ -1,4 +1,4 @@
-import Layout from "./layout";
+import Layout from "./[...filter]/layout";
 import Banner from "@/app/components/home/banner/Banner";
 import HotelCards from "@/app/components/widgets/hotelCards/HotelCards";
 import Testimonials from "@/app/components/home/testimonials/Testimonials";
@@ -11,8 +11,8 @@ export default function Home() {
   return (
     // <Suspense fallback={<Loading />}>
     <Layout>
+      <Banner />
       <main>
-        <Banner />
         <HotelCards
           titlePart1="Find your next adventure with these"
           highLightSpan="flight deals"
@@ -34,7 +34,7 @@ export default function Home() {
         />
         <div style={{ marginTop: "80px", textAlign: "center" }}>
           {/* <Link href="#">Explore more stays</Link> */}
-          <Button text="Explore more stays" />
+          <Button type="button">Explore more stays</Button>
         </div>
         <Testimonials />
       </main>

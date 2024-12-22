@@ -165,7 +165,7 @@ export default function Filter() {
                   />
                 )}
               </div>
-              <Button text="Done" action={toggleDate} />
+              <Button action={toggleDate} type="button">Done</Button>
             </div>
             <div className={styles.calender_container}>
               {tripType == "round_trip" ? (
@@ -222,9 +222,7 @@ export default function Filter() {
             </div>
           </div>
         )}
-        <button className={styles.search} type="submit">
-          Search
-        </button>
+        <Button type="submit" className={styles.search}>Search</Button>
       </form>
     </div>
   );

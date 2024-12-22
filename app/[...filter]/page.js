@@ -1,5 +1,5 @@
 import Layout from "@/app/layout";
-import styles from "./filter.module.css";
+import styles from "./page.module.css";
 import FilterBar from "@/app/components/filter/Filter";
 import PriceGrid from "@/app/components/priceGrid/PriceGrid";
 import FlightList from "@/app/components/flightList/FlightList";

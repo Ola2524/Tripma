@@ -45,10 +45,9 @@ export default function Navbar() {
         </li>
         <li>
           <Button
-            text="Sign up"
             action={() => handleSignForm("signup")}
             customStyle={{ padding: "13px 20px" }}
-          />
+          >Sign up</Button>
         </li>
         {showSignupForm && (
           <Signup
