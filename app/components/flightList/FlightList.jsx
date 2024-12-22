@@ -10,12 +10,14 @@ export default function Filter() {
         Choose a <span>departing</span> flight
       </h4>
       <table>
-        {flights.map((flight) => (
-          <FlightItem key={flight.id} flight={flight} />
-        ))}
+        <tbody>
+          {flights.map((flight) => (
+            <FlightItem key={flight.id} flight={flight} />
+          ))}
+        </tbody>
       </table>
       <div className={styles.show_all_btn}>
-        <Link href=""></Link>
+        <Link href="">Show all flights</Link>
       </div>
       <img src="/images/Map.png" alt="map" />
     </div>

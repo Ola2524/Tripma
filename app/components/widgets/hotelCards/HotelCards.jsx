@@ -1,36 +1,44 @@
-import styles from "./PlacesToStay.module.css";
+import styles from "./HotelCards.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
-import Link from "next/link";
 import { hotels } from "@/lib/dummy_data";
+import Link from "next/link";
 
-export default function FlightDeals() {
+export default function HotelCards({
+  titlePart1,
+  highLightSpan,
+  highLightStyle,
+  titlePart2,
+  pageLink,
+  data = hotels,
+  sliceNumber,
+}) {
   return (
-    <div className={styles.places}>
+    <div className={styles.hotel_cards}>
       <div className={styles.header}>
         <h2>
-          Explore unique <span>places to stay</span>
+          {titlePart1} <span style={highLightStyle}>{highLightSpan}</span> {titlePart2}
         </h2>
-        <Link href="hotels">
+        <Link href={pageLink}>
           All <FontAwesomeIcon icon={faArrowRight} />
         </Link>
       </div>
       <div className={styles.hotels_wrapper}>
-        {hotels.slice(0, 3).map((hotel) => (
-          <div className={styles.hotel_card}>
+        {data.slice(0, sliceNumber).map((hotel) => (
+          <div key={hotel.id} className={styles.hotel_card}>
             <div
               className={styles.image}
               style={{ backgroundImage: `url('/images/${hotel.img}')` }}
             ></div>
             <div className={styles.content}>
-              <h3>{hotel.name}</h3>
+              <div className={styles.card_title}>
+                <h3>{hotel.name}</h3>
+                <span>{hotel.price}</span>
+              </div>
               <p>{hotel.description}</p>
             </div>
           </div>
         ))}
-      </div>
-      <div className={styles.explore_btn}>
-        <Link href="#">Explore more stays</Link>
       </div>
     </div>
   );

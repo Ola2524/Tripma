@@ -10,7 +10,8 @@
   color: var(--main-color);
 }
 
-.navbar ul.links li {
+.navbar ul.links li,
+.navbar .signin_btn {
   display: inline-block;
   font-size: 16px;
   font-weight: 400;
@@ -22,11 +23,11 @@
   color: var(--main-color);
 }
 
-.navbar .signup_btn {
-  background-color: var(--main-color);
-  border-radius: 4px;
-  color: #fff;
-  padding: 13px 20px;
+.navbar .signin_btn {
+  background-color: transparent;
+  border: none;
+  color: var(--main-color);
+  cursor: pointer;
 }
 
 .navbar .toggleBtn {

@@ -19,10 +19,13 @@
     "@mui/material": "^6.2.1",
     "@mui/x-date-pickers": "^7.23.2",
     "@mui/x-date-pickers-pro": "^7.23.2",
+    "@types/react-daterange-picker": "^2.0.8",
+    "chart.js": "^4.4.7",
     "dayjs": "^1.11.13",
     "next": "15.1.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react": "^18.0.0",
+    "react-datepicker": "^7.5.0",
+    "react-dom": "^18.0.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

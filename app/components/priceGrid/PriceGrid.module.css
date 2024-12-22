@@ -42,3 +42,42 @@
   text-align: center;
   color: #6e7491;
 }
+
+.price_chart,
+.price_rate {
+  margin-top: 40px;
+}
+
+.price_chart h4,
+.price_rate h4 {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 24.55px;
+  color: #6e7491;
+  margin-bottom: 16px;
+}
+
+.price_rate h4 span {
+  background-color: #5cd6c0;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 21.82px;
+  border-radius: 4px;
+  color: #fff;
+  padding: 2px 8px;
+}
+
+.price_rate p {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 21.82px;
+  color: #6e7491;
+}
+
+.price_rate p:last-child {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 21.82px;
+  color: #a1b0cc;
+  margin-top: 15px;
+}

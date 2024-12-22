@@ -3,7 +3,7 @@
   font-weight: 600;
   line-height: 24.55px;
   color: #6e7491;
-  margin-bottom: 50px;
+  margin-bottom: 16px;
 }
 
 .flight_list h4 span {
@@ -17,6 +17,7 @@
   overflow: hidden;
   border: 1px solid #e9e8fc;
   padding: 16px 0;
+  width: 100%;
 }
 
 .flight_list table tr {
@@ -63,8 +64,13 @@
   color: var(--main-color);
   transition: 0.5s all ease-in-out;
   margin-top: 24px;
+  margin-bottom: 50px;
+  margin-left: auto;
+  text-align: center;
+  width: 168px;
 }
 
 .show_all_btn:hover {
   background-color: var(--main-color);
+  color: #fff;
 }

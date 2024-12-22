@@ -1,13 +1,12 @@
 import Layout from "@/app/layout";
-import styles from "@/styles/filter.module.css";
+import styles from "./filter.module.css";
 import FilterBar from "@/app/components/filter/Filter";
 import PriceGrid from "@/app/components/priceGrid/PriceGrid";
 import FlightList from "@/app/components/flightList/FlightList";
-import FlightDeals from "@/app/components/home/flightDeals/FlightDeals";
-import PlacesToStay from "@/app/components/home/placesToStay/PlacesToStay";
+import HotelCards from "@/app/components/widgets/hotelCards/HotelCards";
+import { hotels } from "@/lib/dummy_data";
 
 export default function Filter() {
-
   return (
     <Layout>
       <main>
@@ -49,13 +48,29 @@ export default function Filter() {
             display: "flex",
             justifyContent: "space-between",
             margin: "50px 0 80px",
+            gap: "40px",
           }}
         >
           <FlightList />
           <PriceGrid />
         </div>
-        <FlightDeals />
-        <PlacesToStay />
+        <HotelCards
+          titlePart1="Find"
+          highLightSpan="places to stay"
+          titlePart2="in Japan"
+          data={hotels}
+          sliceNumber={3}
+          pageLink="#"
+        />
+
+        <HotelCards
+          titlePart1="People in"
+          highLightSpan="San Francisco"
+          titlePart2="also searched for"
+          data={hotels}
+          sliceNumber={3}
+          pageLink="#"
+        />
       </main>
     </Layout>
   );
