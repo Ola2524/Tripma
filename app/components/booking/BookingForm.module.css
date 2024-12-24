@@ -37,11 +37,19 @@
   color: #6e7491;
 }
 
-.booking_form input[type="text"] {
+.booking_form input:not(input[type="checkbox"]) {
   padding: 12px;
   border: 1px solid #a1b0cc;
   border-radius: 4px;
   width: 300px;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 24.55px;
+  color: #000;
+}
+
+.booking_form .personal_info input {
+  width: 200px !important;
 }
 
 .booking_form .birth_date {
@@ -146,10 +154,10 @@
 }
 
 .submitBtn {
-  color: #7c8db0;
-  border: 1px solid #7c8db0;
-  background: #cbd4e64d;
-  transition: 0.4s all ease-in-out;
+  color: #7c8db0 !important;
+  border: 1px solid #7c8db0 !important;
+  background: #cbd4e64d !important;
+  transition: 0.4s all ease-in-out !important;
 }
 
 .submitBtn:hover {

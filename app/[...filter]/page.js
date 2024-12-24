@@ -6,13 +6,14 @@ import FlightList from "@/app/components/flightList/FlightList";
 import Invoice from "@/app/components/invoice/Invoice";
 import HotelCards from "@/app/components/widgets/hotelCards/HotelCards";
 import { hotels } from "@/lib/dummy_data";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import { flights } from "@/lib/dummy_data";
 import Message from "@/app/components/ui/message/Message";
-import Link from "next/link";
+import Button from "../components/ui/button/Button";
 
 export default function Filter() {
+  const router = useRouter();
   const searchParams = useSearchParams();
 
   const [filteredFlights, setFilteredFlights] = useState([]);
@@ -65,14 +66,12 @@ export default function Filter() {
         const selectedFlight = filteredFlights.find((flight) => {
           return flight.id === selectedFlightID;
         });
-
         setBookings((booking) => [...booking, selectedFlight]);
-      } else if (tripType == "one_way" && bookings.length < 1) {
+      } else if (tripType == "one_way") {
         const selectedFlight = filteredFlights.find((flight) => {
           return flight.id === selectedFlightID;
         });
-
-        setBookings((booking) => [...booking, selectedFlight]);
+        setBookings(() => [selectedFlight]);
       }
     }
   }, [
@@ -86,6 +85,11 @@ export default function Filter() {
     selectedFlightID,
   ]);
 
+  function handleBooking() {
+    localStorage.setItem("bookings", JSON.stringify(bookings));
+    router.push(`/user/booking`);
+  }
+
   return (
     <main>
       <FilterBar
@@ -96,8 +100,8 @@ export default function Filter() {
         startDateParam={startDate}
         endDateParam={endDate}
         tripType={tripType}
-        setBookings = {setBookings}
-        setSelectedFlightID = {setSelectedFlightID}
+        setBookings={setBookings}
+        setSelectedFlightID={setSelectedFlightID}
       />
       {/* {loading && (
         <> */}
@@ -149,14 +153,18 @@ export default function Filter() {
               to={to}
               setSelectedFlight={setSelectedFlightID}
               setFilteredFlights={setFilteredFlights}
-              tripType = {tripType}
-              tripsNum = {bookings.length}
+              tripType={tripType}
+              tripsNum={bookings.length}
             />
             {selectedFlightID ? (
               <Invoice bookings={bookings}>
-                <Link href="/user/booking" className={styles.submitBtn}>
+                <Button
+                  type="button"
+                  action={handleBooking}
+                  className={styles.submitBtn}
+                >
                   Passenger information
-                </Link>
+                </Button>
               </Invoice>
             ) : (
               <PriceGrid />
