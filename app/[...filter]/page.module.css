@@ -1,5 +1,5 @@
 .second_filter {
-    margin-top: 24px;
+  margin-top: 24px;
 }
 
 .second_filter select {
@@ -10,4 +10,16 @@
   background-color: #fff;
   padding: 10px 20px 10px 10px;
   margin-right: 16px;
+}
+
+.submitBtn {
+  color: #fff;
+  border-radius: 4px;
+  background-color: var(--main-color);
+  padding: 11.5px 20px;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 24.55px;
+  border: none;
+  cursor: pointer;
 }

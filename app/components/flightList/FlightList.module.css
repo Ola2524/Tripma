@@ -46,6 +46,7 @@
 
 .flight_list tr:hover {
   background-color: #f6f6fe;
+  border: 1px solid #605DEC
 }
 
 .flight_list table tr:not(:last-child) td {
@@ -57,12 +58,7 @@
   padding: 0 32px;
 }
 
-.show_all_btn {
-  padding: 11.5px 20px;
-  border: 1px solid var(--main-color);
-  background-color: #fff;
-  color: var(--main-color);
-  transition: 0.5s all ease-in-out;
+.show_all {
   margin-top: 24px;
   margin-bottom: 50px;
   margin-left: auto;
@@ -70,7 +66,44 @@
   width: 168px;
 }
 
+.show_all_btn {
+  padding: 11.5px 20px;
+  border: 1px solid var(--main-color);
+  background-color: #fff;
+  color: var(--main-color);
+  transition: 0.5s all ease-in-out;
+}
+
 .show_all_btn:hover {
   background-color: var(--main-color);
   color: #fff;
+}
+
+.map {
+  background: url("/images/Map.png");
+  width: 872px;
+  height: 171px;
+  position: relative;
+}
+
+.map .from {
+  position: absolute;
+  top: 65%;
+  transform: translateY(-50%);
+  right: 38%;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 16px;
+  color: #1513a0;
+}
+
+.map .to {
+  position: absolute;
+  top: 67%;
+  transform: translateY(-50%);
+  left: 32%;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 16px;
+  color: #1513a0;
 }

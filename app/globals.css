@@ -25,6 +25,13 @@ main {
   padding: 10px 40px;
 }
 
+.loader-container {
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .loader {
   width: 48px;
   height: 48px;

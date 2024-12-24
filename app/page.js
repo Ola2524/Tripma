@@ -1,4 +1,3 @@
-import Layout from "./layout";
 import Banner from "@/app/components/home/banner/Banner";
 import HotelCards from "@/app/components/widgets/hotelCards/HotelCards";
 import Testimonials from "@/app/components/home/testimonials/Testimonials";
@@ -10,9 +9,9 @@ import { hotels } from "@/lib/dummy_data";
 export default function Home() {
   return (
     // <Suspense fallback={<Loading />}>
-    <Layout>
+    <>
+      <Banner />
       <main>
-        <Banner />
         <HotelCards
           titlePart1="Find your next adventure with these"
           highLightSpan="flight deals"
@@ -38,7 +37,7 @@ export default function Home() {
         </div>
         <Testimonials />
       </main>
-    </Layout>
+    </>
     // </Suspense>
   );
 }

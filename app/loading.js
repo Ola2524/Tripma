@@ -1,3 +1,3 @@
 export default function Loading() {
-  return <span class="loader"></span>;
+  return <div className="loader-container"><span className="loader"></span></div>;
 }

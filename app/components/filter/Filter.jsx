@@ -8,24 +8,66 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import Button from "@/app/components/ui/button/Button";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { useRouter } from "next/navigation";
 
-export default function Filter() {
+export default function Filter({
+  fromPlace = "",
+  toPlace = "",
+  adults = 1,
+  minors = 0,
+  startDateParam,
+  endDateParam,
+  setBookings,
+  setSelectedFlightID,
+}) {
+  const router = useRouter();
+
+  const [from, setFrom] = useState("");
+  const [to, setTo] = useState("");
+  const [adultsNum, setAdultsNum] = useState(adults);
+  const [minorsNum, setMinorsNum] = useState(minors);
+  const [tripType, setTripType] = useState("round_trip");
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+  // const [formattedStartDate, setFormattedStartDate] = useState(null);
   const changeDate = (dates) => {
     const [start, end] = dates;
     setStartDate(start);
     setEndDate(end);
   };
+  useEffect(() => {
+    setFrom(fromPlace);
+    setTo(toPlace);
+    setAdultsNum(adults);
+    setMinorsNum(minors);
+    setStartDate((startDateParam) =>
+      startDateParam ? new Date(startDateParam) : null
+    );
+    setEndDate((endDateParam) =>
+      endDateParam ? new Date(endDateParam) : null
+    );
+  }, [fromPlace, toPlace, adults, minors, startDateParam, endDateParam]);
+
+  const formattedStartDate = startDate
+    ? startDate.toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+      })
+    : null;
+
+  const formattedEndDate = endDate
+    ? endDate.toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+      })
+    : null;
+
   const [openDatePopup, setOpenDatePopup] = useState(false);
   const [openPassengerNumberPopup, setOpenPassengerNumberPopup] =
     useState(false);
-  const [adultsNum, setAdultsNum] = useState(1);
-  const [minorsNum, setMinorsNum] = useState(0);
-  const [tripType, setTripType] = useState("round_trip");
 
   function toggleDate() {
     setOpenDatePopup((prevOpenDatePopup) => !prevOpenDatePopup);
@@ -37,34 +79,43 @@ export default function Filter() {
     setOpenDatePopup(false);
   }
 
-  function decreaseAdultNumber() {
-    if (adultsNum > 1) {
-      setAdultsNum((num) => num - 1);
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    setBookings((booking) => []);
+    setSelectedFlightID(null);
+    setOpenDatePopup(false);
+    setOpenPassengerNumberPopup(false);
+    const params = {
+      from: from,
+      to: to,
+      adults: adultsNum,
+      minors: minorsNum,
+      "start-date": formattedStartDate,
+      "trip-type": tripType,
+    };
+
+    if (tripType === "round_trip") {
+      params["end-date"] = formattedEndDate;
     }
-  }
 
-  function increaseAdultNumber() {
-    setAdultsNum((num) => num + 1);
-  }
-
-  function decreaseMinorNumber() {
-    if (minorsNum > 0) {
-      setMinorsNum((num) => num - 1);
-    }
-  }
-
-  function increaseMinorNumber() {
-    setMinorsNum((num) => num + 1);
+    const queryString = new URLSearchParams(params).toString();
+    router.push(`/flights?${queryString}`);
   }
 
   return (
     <div className={styles.filter}>
-      <form className={styles.filter_form} style={{ justifyContent: "start" }}>
+      <form onSubmit={handleSubmit} className={styles.filter_form}>
         <div className={styles.place_field}>
           <label htmlFor="from">
             <FontAwesomeIcon icon={faPlaneDeparture} />
           </label>
-          <select name="from" id="from" defaultValue="">
+          <select
+            name="from"
+            value={from}
+            onChange={(e) => setFrom(e.target.value)}
+            id="from"
+          >
             <option value="" disabled>
               From Where?
             </option>
@@ -77,7 +128,12 @@ export default function Filter() {
           <label htmlFor="to">
             <FontAwesomeIcon icon={faPlaneArrival} />
           </label>
-          <select name="to" id="to" defaultValue="">
+          <select
+            name="to"
+            value={to}
+            onChange={(e) => setTo(e.target.value)}
+            id="to"
+          >
             <option value="" disabled>
               Where to?
             </option>
@@ -90,29 +146,11 @@ export default function Filter() {
           <FontAwesomeIcon icon={faCalendar} />
           {tripType === "round_trip" ? (
             <span>
-              {startDate
-                ? startDate.toLocaleDateString("en-US", {
-                    month: "short",
-                    day: "numeric",
-                  })
-                : "Departure"}
-              -
-              {endDate
-                ? endDate.toLocaleDateString("en-US", {
-                    month: "short",
-                    day: "numeric",
-                  })
-                : "Return"}
+              {startDate ? formattedStartDate : "Departure"}-
+              {endDate ? formattedEndDate : "Return"}
             </span>
           ) : (
-            <span>
-              {startDate
-                ? startDate.toLocaleDateString("en-US", {
-                    month: "short",
-                    day: "numeric",
-                  })
-                : "Departure"}
-            </span>
+            <span>{startDate ? formattedStartDate : "Departure"}</span>
           )}
         </button>
         {openDatePopup && (
@@ -165,7 +203,9 @@ export default function Filter() {
                   />
                 )}
               </div>
-              <Button action={toggleDate} type="button">Done</Button>
+              <Button action={toggleDate} type="button">
+                Done
+              </Button>
             </div>
             <div className={styles.calender_container}>
               {tripType == "round_trip" ? (
@@ -176,6 +216,7 @@ export default function Filter() {
                   endDate={endDate}
                   selectsRange
                   monthsShown={2}
+                  dateFormat="MMM d"
                   inline
                 />
               ) : (
@@ -184,45 +225,66 @@ export default function Filter() {
                   minDate={new Date()}
                   selected={startDate}
                   selectsRange
+                  dateFormat="MMM d"
                   inline
                 />
               )}
             </div>
           </div>
         )}
-        <button
-          className={styles.passenger_num}
-          type="button"
-          onClick={togglePassengerPopup}
-        >
-          <FontAwesomeIcon icon={faUser} />
-          <span>{adultsNum} adult</span>
-        </button>
-        {openPassengerNumberPopup && (
-          <div className={styles.passengersPopup}>
-            <div>
-              <span>Adults:</span>
-              <button type="button" onClick={decreaseAdultNumber}>
-                -
-              </button>
-              <span>{adultsNum}</span>
-              <button type="button" onClick={increaseAdultNumber}>
-                +
-              </button>
+        <div style={{ position: "relative" }}>
+          <button
+            className={styles.passenger_num}
+            type="button"
+            onClick={togglePassengerPopup}
+          >
+            <FontAwesomeIcon icon={faUser} />
+            <span>{adultsNum} adult</span>
+          </button>
+          {openPassengerNumberPopup && (
+            <div className={styles.passengersPopup}>
+              <div>
+                <span>Adults:</span>
+                <button
+                  type="button"
+                  onClick={() =>
+                    adultsNum > 1 && setAdultsNum((num) => parseInt(num) - 1)
+                  }
+                >
+                  -
+                </button>
+                <span>{adultsNum}</span>
+                <button
+                  type="button"
+                  onClick={() => setAdultsNum((num) => parseInt(num) + 1)}
+                >
+                  +
+                </button>
+              </div>
+              <div>
+                <span>Minors:</span>
+                <button
+                  type="button"
+                  onClick={() =>
+                    minorsNum > 0 && setMinorsNum((num) => parseInt(num) - 1)
+                  }
+                >
+                  -
+                </button>
+                <span>{minorsNum}</span>
+                <button
+                  type="button"
+                  onClick={() => setMinorsNum((num) => parseInt(num) + 1)}
+                >
+                  +
+                </button>
+              </div>
             </div>
-            <div>
-              <span>Minors:</span>
-              <button type="button" onClick={decreaseMinorNumber}>
-                -
-              </button>
-              <span>{minorsNum}</span>
-              <button type="button" onClick={increaseMinorNumber}>
-                +
-              </button>
-            </div>
-          </div>
-        )}
-        <Button type="submit" className={styles.search}>Search</Button>
+          )}
+        </div>
+        <Button type="submit" className={styles.search}>
+          Search
+        </Button>
       </form>
     </div>
   );
