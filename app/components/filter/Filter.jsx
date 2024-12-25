@@ -20,8 +20,8 @@ export default function Filter({
   minors = 0,
   startDateParam,
   endDateParam,
-  setBookings,
-  setSelectedFlightID,
+  setBookings = null,
+  setSelectedFlightID = null,
 }) {
   const router = useRouter();
 
@@ -81,9 +81,14 @@ export default function Filter({
 
   function handleSubmit(e) {
     e.preventDefault();
+    if (setBookings) {
+      setBookings((booking) => []);
+    }
 
-    setBookings((booking) => []);
-    setSelectedFlightID(null);
+    if (setSelectedFlightID) {
+      setSelectedFlightID(null);
+    }
+
     setOpenDatePopup(false);
     setOpenPassengerNumberPopup(false);
     const params = {

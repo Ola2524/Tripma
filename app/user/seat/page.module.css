@@ -16,10 +16,133 @@
   font-weight: 900;
   color: var(--main-color);
 }
+.flight_seats {
+  position: relative;
+  /* overflow-x: hidden; */
+}
 
-.flight_seats,
+.flight_seats img {
+  position: absolute;
+  top: 0;
+  left: -65%;
+}
+
+.flight_seats .business_class,
+.flight_seats .economy_class {
+  position: absolute;
+  top: 156px;
+  left: 0;
+  width: 200px;
+  border-radius: 8px;
+  background: #ffffff;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.flight_seats .business_class {
+  top: 610px;
+  left: 235px;
+  height: 312px;
+  padding: 6px 7px 0;
+}
+
+.flight_seats .economy_class {
+  top: 940px;
+  left: 235px;
+  height: 1332px;
+  padding: 6px 4px 0;
+}
+
+.flight_seats .flightRow {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.flight_seats .rowNum {
+  width: 30px;
+  font-size: 14px;
+  font-weight: 400;
+  text-align: center;
+  color: #7c8db0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flight_seats .business_class .rowNum {
+  height: 50px;
+}
+
+.flight_seats .economy_class .rowNum {
+  height: 33px;
+}
+
+.flight_seats .seat {
+  cursor: pointer;
+  position: relative;
+  background: #e9e8fc;
+  border-radius: 4px;
+}
+
+.flight_seats .business_class .seat {
+  width: 30px;
+  height: 40px;
+  margin: 6px 4px;
+}
+
+.flight_seats .economy_class .seat {
+  width: 22px;
+  height: 32px;
+  margin: 2px 2.5px;
+}
+
+.flight_seats .seat input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.flight_seats .seat:hover {
+  background: rgb(227, 226, 255);
+}
+
+.flight_seats .business_class .seat.available {
+  background: linear-gradient(180deg, #5cd6c0 0%, #22c3a6 100%);
+}
+
+.flight_seats .economy_class .seat.available {
+  background: linear-gradient(180deg, #605dec 0%, #2a26d9 100%);
+}
+
+.flight_seats .seat.selected {
+  background: linear-gradient(180deg, #eb568c 0%, #ed5e76 100%) !important;
+}
+
+.flight_seats .seat.selected::after {
+  content: url("/images/Vector white.png");
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+}
+
 .booking_details {
+  position: fixed;
+  right: 0;
+  top: 0;
+  bottom: 0;
   width: 50%;
+  height: 100%;
+  backdrop-filter: blur(24px);
+  z-index: 20;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  max-height: 100%;
 }
 
 .booking_details header {
@@ -82,6 +205,7 @@
 .seat_classes {
   display: flex;
   padding: 40px 26px 48px;
+  border-left: 1px solid rgba(124, 141, 176, 0.5);
 }
 
 .seat_classes > div {
@@ -101,11 +225,22 @@
   margin-bottom: 16px;
 }
 
-.seat_classes h3.selected span {
-  background-color: var(--main-color);
+.seat_classes .selected_badge {
   border-radius: 4px;
   padding: 2px 6px;
   color: #fff;
+  position: absolute;
+  top: 0;
+}
+
+.seat_classes .economy .selected_badge {
+  background: linear-gradient(180deg, #605dec 0%, #2a26d9 100%);
+  left: 91px;
+}
+
+.seat_classes .business .selected_badge {
+  background: linear-gradient(180deg, #5cd6c0 0%, #22c3a6 100%);
+  left: 140px;
 }
 
 .seat_classes p {
@@ -113,4 +248,96 @@
   font-weight: 400;
   line-height: 19.1px;
   color: #7c8db0;
+}
+
+.divider {
+  width: 32px;
+  height: 4px;
+  margin: 16px 0;
+}
+
+.economy .divider {
+  background: #605dec;
+}
+
+.business .divider {
+  background: #5cd6c0;
+}
+
+.seat_classes li {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 19.1px;
+  color: #6e7491;
+  padding: 9px 0 9px 40px;
+  position: relative;
+}
+
+.seat_classes .economy li::before {
+  content: url("/images/Ellipse 16.png");
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.seat_classes .business li::before {
+  content: url("/images/Vector 10.png");
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.seat_footer {
+  background: #fafafe;
+  padding: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: solid rgba(124, 141, 176, 0.5);
+  border-width: 1px 0 1px 1px;
+}
+
+.seat_footer h5 {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 19.1px;
+  color: #7c8db0;
+}
+
+.seat_footer p {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 24.55px;
+  color: #6e7491;
+}
+
+.saveBtn,
+.nextBtn {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 21.82px;
+}
+
+.saveBtn {
+  border: 1px solid var(--main-color) !important ;
+  color: var(--main-color) !important;
+  background: #fff !important;
+  margin-right: 16px !important;
+}
+
+.nextBtn {
+  color: #7c8db0 !important;
+  border: 1px solid #7c8db0 !important;
+  background: #cbd4e64d !important;
+  transition: 0.4s all ease-in-out !important;
+}
+
+.saveBtn:hover,
+.nextBtn:hover,
+.active {
+  background-color: var(--main-color) !important;
+  border-color: var(--main-color) !important;
+  color: #fff !important;
 }

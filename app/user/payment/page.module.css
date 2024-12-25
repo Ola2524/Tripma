@@ -1,0 +1,12 @@
+.submitBtn {
+  color: #7c8db0 !important;
+  border: 1px solid #7c8db0 !important;
+  background: #cbd4e64d !important;
+  transition: 0.4s all ease-in-out !important;
+}
+
+.submitBtn:hover {
+  background-color: var(--main-color) !important;
+  border-color: var(--main-color) !important;
+  color: #fff !important;
+}
