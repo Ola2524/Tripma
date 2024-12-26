@@ -13,6 +13,7 @@ export default function Filter({
   setSelectedFlight,
   tripType,
   tripsNum,
+  getAllFlights,
 }) {
   return (
     <div className={styles.flight_list}>
@@ -37,7 +38,11 @@ export default function Filter({
         </tbody>
       </table>
       <div className={styles.show_all}>
-        <Button className={styles.show_all_btn} type="button">
+        <Button
+          className={styles.show_all_btn}
+          action={getAllFlights}
+          type="button"
+        >
           Show all flights
         </Button>
       </div>

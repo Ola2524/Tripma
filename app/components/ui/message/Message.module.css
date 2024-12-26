@@ -2,13 +2,32 @@
   width: 100%;
   margin-top: 30px;
   padding: 20px;
-  font-weight: 700;
   font-size: 16px;
+  font-weight: 400;
+  line-height: 21.82px;
   border-radius: 4px;
   text-align: center;
+  position: relative;
 }
 
 .error {
   color: #dc3545;
   background-color: #f8d7da;
+}
+
+.success {
+  color: #007b65;
+  background-color: #eafffb;
+}
+
+.close_btn {
+  position: absolute;
+  top: 50%;
+  right: 25px;
+  transform: translateY(-50%);
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  color: #52527a;
 }

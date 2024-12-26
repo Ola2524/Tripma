@@ -1,3 +1,7 @@
+.price_grid {
+  width: 397px;
+}
+
 .price_grid h4 {
   font-size: 18px;
   font-weight: 600;
@@ -23,7 +27,7 @@
 
 .price_grid td,
 .price_grid th {
-  padding: 10px 20px;
+  padding: 10px 14px;
 }
 
 .price_grid th,

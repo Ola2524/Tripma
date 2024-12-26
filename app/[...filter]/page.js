@@ -4,7 +4,7 @@ import FilterBar from "@/app/components/filter/Filter";
 import PriceGrid from "@/app/components/priceGrid/PriceGrid";
 import FlightList from "@/app/components/flightList/FlightList";
 import Invoice from "@/app/components/invoice/Invoice";
-import HotelCards from "@/app/components/widgets/hotelCards/HotelCards";
+import HotelList from "@/app/components/widgets/hotelList/HotelList";
 import { hotels } from "@/lib/dummy_data";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
@@ -27,7 +27,7 @@ export default function Filter() {
   const [endDate, setEndDate] = useState(null);
   const [tripType, setTripType] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [bookings, setBookings] = useState([]);
+  const [booking, setBookings] = useState([]);
 
   useEffect(() => {
     if (searchParams) {
@@ -62,7 +62,7 @@ export default function Filter() {
     }
 
     if (selectedFlightID) {
-      if (tripType == "round_trip" && bookings.length < 2) {
+      if (tripType == "round_trip" && booking.length < 2) {
         const selectedFlight = filteredFlights.find((flight) => {
           return flight.id === selectedFlightID;
         });
@@ -73,6 +73,7 @@ export default function Filter() {
         });
         setBookings(() => [selectedFlight]);
       }
+      setSelectedFlightID(null);
     }
   }, [
     searchParams,
@@ -86,8 +87,12 @@ export default function Filter() {
   ]);
 
   function handleBooking() {
-    localStorage.setItem("bookings", JSON.stringify(bookings));
+    localStorage.setItem("booking", JSON.stringify(booking));
     router.push(`/user/booking`);
+  }
+
+  function getAllFlights() {
+    setFilteredFlights([...flights]);
   }
 
   return (
@@ -154,10 +159,11 @@ export default function Filter() {
               setSelectedFlight={setSelectedFlightID}
               setFilteredFlights={setFilteredFlights}
               tripType={tripType}
-              tripsNum={bookings.length}
+              tripsNum={booking.length}
+              getAllFlights={getAllFlights}
             />
-            {selectedFlightID ? (
-              <Invoice bookings={bookings}>
+            {booking.length > 0 ? (
+              <Invoice booking={booking}>
                 <Button
                   type="button"
                   action={handleBooking}
@@ -178,7 +184,7 @@ export default function Filter() {
       )}
       {/* </>
       )} */}
-      <HotelCards
+      <HotelList
         titlePart1="Find"
         highLightSpan="places to stay"
         titlePart2="in Japan"
@@ -187,7 +193,7 @@ export default function Filter() {
         pageLink="#"
       />
 
-      <HotelCards
+      <HotelList
         titlePart1="People in"
         highLightSpan="San Francisco"
         titlePart2="also searched for"

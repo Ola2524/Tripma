@@ -65,10 +65,6 @@
   margin-top: 48px;
 }
 
-.booking_form .personal_info input {
-  width: 200px;
-}
-
 .booking_form .birth_date::after {
   content: "MM/DD/YY";
   font-size: 12px;

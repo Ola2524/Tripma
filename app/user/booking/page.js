@@ -8,13 +8,13 @@ import { useState, useEffect } from "react";
 
 export default function Booking() {
   const [dataLoaded, setDataLoaded] = useState(false);
-  const [bookings, setBookings] = useState([]);
+  const [booking, setBooking] = useState([]);
   const [passengerInfo, setPassengerInfo] = useState([]);
   useEffect(() => {
-    const bookings = JSON.parse(localStorage.getItem("bookings"));
+    const booking = JSON.parse(localStorage.getItem("bookings"));
     const passengerInfo = JSON.parse(localStorage.getItem("passengerInfo"));
-    if (bookings) {
-      setBookings(bookings);
+    if (booking) {
+      setBooking(booking);
     }
 
     if (passengerInfo) {
@@ -35,7 +35,7 @@ export default function Booking() {
           }}
         >
           <BookingForm passengerInfo={passengerInfo} />
-          <Invoice bookings={bookings}>
+          <Invoice booking = {booking}>
             <Button type="submit" className={styles.submitBtn}>
               Select seats
             </Button>

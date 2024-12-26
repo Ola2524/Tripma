@@ -2,11 +2,11 @@ import styles from "./Invoice.module.css";
 import Image from "next/image";
 import Button from "@/app/components/ui/button/Button";
 
-export default function Invoice({ children, bookings }) {
+export default function Invoice({ children, booking }) {
   return (
     <div className={styles.invoice}>
       <div className={styles.booked_flights}>
-        {bookings.map((booking, index) => (
+        {booking.map((booking, index) => (
           <div className={styles.booking_item} key={index}>
             <div className={styles.booking_title}>
               <Image

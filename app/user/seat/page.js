@@ -62,6 +62,7 @@ export default function Seat() {
         <img src="/images/Plane (seat selection).png" alt="flight" />
         <div className={styles.business_class}>
           {[...Array(5)].map((_, row) => {
+            console.log(row);
             row++;
             return (
               <div className={styles.flightRow} key={`row-${row}`}>

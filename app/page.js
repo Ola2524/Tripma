@@ -1,5 +1,5 @@
 import Banner from "@/app/components/home/banner/Banner";
-import HotelCards from "@/app/components/widgets/hotelCards/HotelCards";
+import HotelList from "@/app/components/widgets/hotelList/HotelList";
 import Testimonials from "@/app/components/home/testimonials/Testimonials";
 import Button from "@/app/components/ui/button/Button";
 import { hotels } from "@/lib/dummy_data";
@@ -12,14 +12,14 @@ export default function Home() {
     <>
       <Banner />
       <main>
-        <HotelCards
+        <HotelList
           titlePart1="Find your next adventure with these"
           highLightSpan="flight deals"
           data={hotels}
           sliceNumber={4}
           pageLink="#"
         />
-        <HotelCards
+        <HotelList
           titlePart1="Explore unique"
           highLightSpan="places to stay"
           data={hotels}
@@ -33,7 +33,7 @@ export default function Home() {
         />
         <div style={{ marginTop: "80px", textAlign: "center" }}>
           {/* <Link href="#">Explore more stays</Link> */}
-          <Button text="Explore more stays" />
+          <Button type="button">Explore more stays</Button>
         </div>
         <Testimonials />
       </main>

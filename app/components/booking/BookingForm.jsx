@@ -127,7 +127,7 @@ export default function BookingForm({ passengerInfo }) {
             <input type="text" ref={lastName} placeholder="Last name*" />
             <input type="text" ref={suffix} placeholder="Suffix" />
             <div className={styles.birth_date}>
-              <input type="text" ref={birthDate} placeholder="Date of birth*" />
+              <input type="date" ref={birthDate} placeholder="Date of birth*" />
             </div>
           </div>
           <div className={styles.contact_info}>
