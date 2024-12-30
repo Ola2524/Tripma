@@ -3,13 +3,26 @@ import Link from "next/link";
 import styles from "./Navbar.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import Signup from "../signup/Signup";
 import Button from "../../ui/button/Button";
+import { signOut, useSession } from "next-auth/react";
 
 export default function Navbar() {
+  const searchParams = useSearchParams();
+  const showSignupFormParam = searchParams.get("showSignupForm") === "true";
+  const { data: session, status } = useSession();
+
   const [showSignupForm, setShowSignupForm] = useState(false);
   const [signFormStatus, setSignFormStatus] = useState(null);
+
+  useEffect(() => {
+    if (showSignupFormParam) {
+      setSignFormStatus("signin");
+      setShowSignupForm(true);
+    }
+  }, [showSignupFormParam]);
 
   function handleSignForm(status) {
     setSignFormStatus(status == "signin" ? "signin" : "signup");
@@ -34,21 +47,37 @@ export default function Navbar() {
         <li>
           <Link href="/packages">Packages</Link>
         </li>
-        <li>
-          <button
-            type="button"
-            className={styles.signin_btn}
-            onClick={() => handleSignForm("signin")}
-          >
-            Sign in
-          </button>
-        </li>
-        <li>
-          <Button
-            action={() => handleSignForm("signup")}
-            customStyle={{ padding: "13px 20px" }}
-          >Sign up</Button>
-        </li>
+        {status === "unauthenticated" && (
+          <>
+            <li>
+              <button
+                type="button"
+                className={styles.signin_btn}
+                onClick={() => handleSignForm("signin")}
+              >
+                Sign in
+              </button>
+            </li>
+            <li>
+              <Button
+                action={() => handleSignForm("signup")}
+                customStyle={{ padding: "13px 20px" }}
+              >
+                Sign up
+              </Button>
+            </li>
+          </>
+        )}
+        {status === "authenticated" && (
+          <li>
+            <Button
+              action={() => signOut({ redirect: false })}
+              customStyle={{ padding: "13px 20px" }}
+            >
+              Sign out
+            </Button>
+          </li>
+        )}
         {showSignupForm && (
           <Signup
             setShowSignupForm={setShowSignupForm}

@@ -3,10 +3,13 @@ import HotelList from "@/app/components/widgets/hotelList/HotelList";
 import Testimonials from "@/app/components/home/testimonials/Testimonials";
 import Button from "@/app/components/ui/button/Button";
 import { hotels } from "@/lib/dummy_data";
+// import { getServerSession } from "next-auth";
+// import { options } from "@/lib/authOptions";
 // import Loading from "./loading";
 // import { Suspense } from "react";
 
 export default function Home() {
+  // const session = await getServerSession(options);
   return (
     // <Suspense fallback={<Loading />}>
     <>

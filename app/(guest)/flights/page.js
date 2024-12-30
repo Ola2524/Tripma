@@ -1,18 +1,20 @@
 "use client";
 import styles from "./page.module.css";
-import FilterBar from "@/app/components/filter/Filter";
-import PriceGrid from "@/app/components/priceGrid/PriceGrid";
-import FlightList from "@/app/components/flightList/FlightList";
-import Invoice from "@/app/components/invoice/Invoice";
+import FilterBar from "@/app/components/widgets/filter/Filter";
+import PriceGrid from "@/app/components/(filterPage)/priceGrid/PriceGrid";
+import FlightList from "@/app/components/(filterPage)/flightList/FlightList";
+import Invoice from "@/app/components/widgets/invoice/Invoice";
 import HotelList from "@/app/components/widgets/hotelList/HotelList";
 import { hotels } from "@/lib/dummy_data";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import { flights } from "@/lib/dummy_data";
 import Message from "@/app/components/ui/message/Message";
-import Button from "../components/ui/button/Button";
+import Button from "../../components/ui/button/Button";
+import { useSession } from "next-auth/react";
 
 export default function Filter() {
+  const { data: session, status } = useSession();
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -27,7 +29,7 @@ export default function Filter() {
   const [endDate, setEndDate] = useState(null);
   const [tripType, setTripType] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [booking, setBookings] = useState([]);
+  const [booking, setBooking] = useState([]);
 
   useEffect(() => {
     if (searchParams) {
@@ -66,12 +68,19 @@ export default function Filter() {
         const selectedFlight = filteredFlights.find((flight) => {
           return flight.id === selectedFlightID;
         });
-        setBookings((booking) => [...booking, selectedFlight]);
+        if (selectedFlight) {
+          setBooking((booking) => [
+            ...booking,
+            { ...selectedFlight, adults, minors },
+          ]);
+        }
       } else if (tripType == "one_way") {
         const selectedFlight = filteredFlights.find((flight) => {
           return flight.id === selectedFlightID;
         });
-        setBookings(() => [selectedFlight]);
+        if (selectedFlight) {
+          setBooking(() => [{ ...selectedFlight, adults, minors }]);
+        }
       }
       setSelectedFlightID(null);
     }
@@ -87,8 +96,18 @@ export default function Filter() {
   ]);
 
   function handleBooking() {
-    localStorage.setItem("booking", JSON.stringify(booking));
-    router.push(`/user/booking`);
+    if (status == "authenticated") {
+      localStorage.setItem("booking", JSON.stringify(booking));
+      router.push(`/user/booking`);
+    } else {
+      const newParams = new URLSearchParams(searchParams.toString());
+      newParams.set("showSignupForm", "true");
+      window.history.pushState(
+        {},
+        "",
+        `${window.location.pathname}?${newParams.toString()}`
+      );
+    }
   }
 
   function getAllFlights() {
@@ -105,7 +124,7 @@ export default function Filter() {
         startDateParam={startDate}
         endDateParam={endDate}
         tripType={tripType}
-        setBookings={setBookings}
+        setBooking={setBooking}
         setSelectedFlightID={setSelectedFlightID}
       />
       {/* {loading && (

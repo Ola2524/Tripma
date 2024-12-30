@@ -1,9 +1,11 @@
+"use client";
 import styles from "./HotelList.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
-import { hotels } from "@/lib/dummy_data";
+// import { hotels } from "@/lib/dummy_data";
 import Link from "next/link";
 import HotelCard from "./HotelCard";
+import { useEffect, useState } from "react";
 
 export default function HotelList({
   titlePart1,
@@ -14,6 +16,20 @@ export default function HotelList({
   data = hotels,
   sliceNumber,
 }) {
+  const [hotels, setHotels] = useState([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const data = await fetch("/api/hotels");
+        const response = data.json();
+        setHotels(response);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchData();
+  }, []);
   return (
     <div className={styles.hotels}>
       <div className={styles.header}>

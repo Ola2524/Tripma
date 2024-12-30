@@ -1,4 +1,4 @@
-import Filter from "../../filter/Filter";
+import Filter from "../../widgets/filter/Filter";
 import styles from "./Banner.module.css";
 
 export default function Banner() {

@@ -1,10 +1,52 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./Signup.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { signIn } from "next-auth/react";
+import { useState } from "react";
 
 export default function Signup({ setShowSignupForm, status }) {
+  const [emailOrPhone, setEmailOrPhone] = useState("");
+  const [password, setPassword] = useState("");
+
+  async function handleAuthentication(e) {
+    e.preventDefault();
+
+    if (!emailOrPhone || !password) {
+      alert("Email/Phone and password are required");
+      return;
+    }
+
+    if (status === "signin") {
+      signIn("credentials", { redirect: false, emailOrPhone, password });
+      setShowSignupForm(false)
+    } else if (status === "signup") {
+      const res = await fetch("/api/auth/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ emailOrPhone, password }),
+      });
+
+      const result = await res.json();
+
+      if (res.ok) {
+        signIn("credentials", {
+          redirect: false,
+          emailOrPhone,
+          password,
+        });
+        setShowSignupForm(false)
+      } else {
+        alert(result.message || "Invalid inputs");
+      }
+    }
+  }
+
   return (
     <div className={styles.signup}>
       <div className={styles.signup_form}>
@@ -15,7 +57,7 @@ export default function Signup({ setShowSignupForm, status }) {
         >
           <FontAwesomeIcon icon={faXmark} />
         </button>
-        {status == "signin" ? (
+        {status === "signin" ? (
           <h3 style={{ marginBottom: "20px" }}>Sign in for Tripma</h3>
         ) : (
           <>
@@ -26,10 +68,20 @@ export default function Signup({ setShowSignupForm, status }) {
             </p>
           </>
         )}
-        <form action="#">
-          <input type="text" placeholder="Email or phone number" />
-          <input type="text" placeholder="Password" />
-          {status != "signin" && (
+        <form onSubmit={handleAuthentication}>
+          <input
+            type="text"
+            placeholder="Email or phone number"
+            value={emailOrPhone}
+            onChange={(e) => setEmailOrPhone(e.target.value)}
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          {status !== "signin" && (
             <>
               <div style={{ marginBottom: "12px" }}>
                 <input type="checkbox" name="terms" id="terms" />
@@ -45,7 +97,9 @@ export default function Signup({ setShowSignupForm, status }) {
               </div>
             </>
           )}
-          <button type="submit">Create account</button>
+          <button type="submit">
+            {status === "signin" ? "Sign In" : "Create account"}
+          </button>
           <div className={styles.divider}>or</div>
           <div className={styles.signup_links}>
             <Link href="#">

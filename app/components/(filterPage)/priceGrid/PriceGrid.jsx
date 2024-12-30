@@ -1,5 +1,5 @@
 import styles from "./PriceGrid.module.css";
-import Chart from "../ui/chart/Chart";
+import Chart from "../../ui/chart/Chart";
 
 export default function PriceGrid() {
   return (

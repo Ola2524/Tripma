@@ -10,7 +10,7 @@ export default function HotelCard({ hotel, style }) {
       <div className={styles.content}>
         <div className={styles.card_title}>
           <h3>{hotel.name}</h3>
-          <span>{hotel.price}</span>
+          <span>$ {hotel.price}</span>
         </div>
         <p>{hotel.description}</p>
       </div>

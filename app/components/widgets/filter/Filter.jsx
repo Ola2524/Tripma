@@ -20,7 +20,7 @@ export default function Filter({
   minors = 0,
   startDateParam,
   endDateParam,
-  setBookings = null,
+  setBooking = null,
   setSelectedFlightID = null,
 }) {
   const router = useRouter();
@@ -32,7 +32,6 @@ export default function Filter({
   const [tripType, setTripType] = useState("round_trip");
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
-  // const [formattedStartDate, setFormattedStartDate] = useState(null);
   const changeDate = (dates) => {
     const [start, end] = dates;
     setStartDate(start);
@@ -81,8 +80,8 @@ export default function Filter({
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (setBookings) {
-      setBookings((booking) => []);
+    if (setBooking) {
+      setBooking((booking) => []);
     }
 
     if (setSelectedFlightID) {

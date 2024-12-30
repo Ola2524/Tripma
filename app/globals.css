@@ -29,6 +29,24 @@ main {
   padding: 10px 40px;
 }
 
+::-webkit-scrollbar {
+  width: 15px;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px rgba(128, 128, 128, 0.6);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--main-color);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(81, 78, 234);
+}
+
 .loader-container {
   height: 80vh;
   display: flex;

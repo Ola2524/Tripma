@@ -17,14 +17,18 @@
     "@fortawesome/free-solid-svg-icons": "^6.7.1",
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@types/react-daterange-picker": "^2.0.8",
+    "bcrypt": "^5.1.1",
     "chart.js": "^4.4.7",
+    "mysql2": "^3.12.0",
     "next": "15.1.0",
+    "next-auth": "^4.24.11",
     "react": "^18.0.0",
     "react-datepicker": "^7.5.0",
     "react-dom": "^18.0.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@types/node": "22.10.2",
     "eslint": "^9",
     "eslint-config-next": "15.1.0"
   }

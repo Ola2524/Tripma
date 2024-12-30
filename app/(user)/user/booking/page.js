@@ -1,24 +1,25 @@
 "use client";
 import BookingForm from "@/app/components/booking/BookingForm";
-import Invoice from "@/app/components/invoice/Invoice";
+import Invoice from "@/app/components/widgets/invoice/Invoice";
 import Button from "@/app/components/ui/button/Button";
 import Image from "next/image";
 import styles from "./page.module.css";
 import { useState, useEffect } from "react";
+import { useSession } from "next-auth/react"
 
 export default function Booking() {
   const [dataLoaded, setDataLoaded] = useState(false);
   const [booking, setBooking] = useState([]);
   const [passengerInfo, setPassengerInfo] = useState([]);
   useEffect(() => {
-    const booking = JSON.parse(localStorage.getItem("bookings"));
+    const booking = JSON.parse(localStorage.getItem("booking"));
     const passengerInfo = JSON.parse(localStorage.getItem("passengerInfo"));
     if (booking) {
       setBooking(booking);
     }
 
     if (passengerInfo) {
-      setPassengerInfo(...passengerInfo);
+      setPassengerInfo(passengerInfo);
     }
     setDataLoaded(true);
   }, []);
@@ -34,8 +35,8 @@ export default function Booking() {
             gap: "160px",
           }}
         >
-          <BookingForm passengerInfo={passengerInfo} />
-          <Invoice booking = {booking}>
+          <BookingForm passengerInfo={passengerInfo} booking={booking} />
+          <Invoice booking={booking}>
             <Button type="submit" className={styles.submitBtn}>
               Select seats
             </Button>

@@ -1,6 +1,6 @@
 "use client";
 import PaymentForm from "@/app/components/payment/PaymentForm";
-import Invoice from "@/app/components/invoice/Invoice";
+import Invoice from "@/app/components/widgets/invoice/Invoice";
 import Button from "@/app/components/ui/button/Button";
 import styles from "./page.module.css";
 import { useState, useEffect } from "react";
@@ -60,7 +60,7 @@ export default function Payment() {
             <PaymentForm paymentInfo={paymentInfo.length > 0 && paymentInfo} />
           </div>
           <div style={{ width: "400px" }}>
-            <Invoice bookings={bookings}>
+            <Invoice booking={bookings}>
               <Button type="submit" className={styles.submitBtn}>
                 Confirm and pay
               </Button>

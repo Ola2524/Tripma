@@ -4,7 +4,7 @@ import styles from "./FlightList.module.css";
 import Link from "next/link";
 import FlightItem from "./FlightItem";
 import { useState } from "react";
-import Button from "../ui/button/Button";
+import Button from "../../ui/button/Button";
 
 export default function Filter({
   flights,
