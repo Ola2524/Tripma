@@ -27,7 +27,9 @@ export default function Seat() {
 
   const [departureSelectedSeats, setDepartureSelectedSeats] = useState([]);
   const [arrivingSelectedSeats, setArrivingSelectedSeats] = useState([]);
+
   const [showBusinessPopup, setShowBusinessPopup] = useState(null);
+  const [selectedBusinessSeat, setSelectedBusinessSeat] = useState(null);
 
   // const [booking, setBookings] = useState([]);
   const [passengerInfo, setPassengerInfo] = useState([]);
@@ -80,7 +82,7 @@ export default function Seat() {
             `/api/exit_doors?flight_id=${parseInt(booking?.id)}`
           );
           const data = await response.json();
-          setExitDoors(data)
+          setExitDoors(data);
         } catch (error) {
           console.error("Fetch Error:", error);
         } finally {
@@ -109,6 +111,25 @@ export default function Seat() {
       )
     );
   }, [businessSeats, economySeats]);
+
+  function upgradeToBusinessClass(selectedBusinessSeat) {
+    setSelectedSeats((prevSelectedSeats) => {
+      const seatExists = prevSelectedSeats.some(
+        (s) => s.id === selectedBusinessSeat.id
+      );
+      if (seatExists) {
+        return prevSelectedSeats.filter(
+          (s) => s.id !== selectedBusinessSeat.id
+        );
+      } else {
+        return [
+          ...prevSelectedSeats,
+          { ...selectedBusinessSeat, isSelected: true },
+        ];
+      }
+    });
+    setShowBusinessPopup(false);
+  }
 
   function handleFlightBooking() {
     if (departureBooking?.tripType == "round_trip") {
@@ -146,6 +167,8 @@ export default function Seat() {
           setSelectedSeats={setSelectedSeats}
           exitDoors={exitDoors}
           setShowBusinessPopup={setShowBusinessPopup}
+          upgradeToBusinessClass={upgradeToBusinessClass}
+          setSelectedBusinessSeat={setSelectedBusinessSeat}
         />
       </div>
       <div className={styles.booking_details}>
@@ -273,9 +296,9 @@ export default function Seat() {
             <div>
               <h5>Seat number</h5>
               <p>
-                {/* {selectedSeats
-                  ? `${selectedSeats.row}${selectedSeats.seat}`
-                  : "--"} */}
+                {selectedSeats.length > 0
+                  ? selectedSeats[0]?.label
+                  : "--"}
               </p>
             </div>
             <div>
@@ -298,19 +321,33 @@ export default function Seat() {
           </div>
         )}
       </div>
-        {showBusinessPopup&&<div className={styles.business_class_popup}>
-        <div className={styles.message}>
-          <h3>Upgrade seat</h3>
-          <p>
-            Upgrade your seat for only $199, and enjoy 45 percent more leg room,
-            and seats that recline 40 percent more than economy.
-          </p>
-          <div style={{textAlign: "right"}}>
-          <Button type="button" className={styles.cancel}>Cancel</Button>
-          <Button type="button">Upgrade for $199</Button>
+      {showBusinessPopup && (
+        <div className={styles.business_class_popup}>
+          <div className={styles.message}>
+            <h3>Upgrade seat</h3>
+            <p>
+              Upgrade your seat for only ${selectedBusinessSeat?.price}, and
+              enjoy 45 percent more leg room, and seats that recline 40 percent
+              more than economy.
+            </p>
+            <div style={{ textAlign: "right" }}>
+              <Button
+                type="button"
+                className={styles.cancel}
+                action={() => setShowBusinessPopup(false)}
+              >
+                Cancel
+              </Button>
+              <Button
+                type="button"
+                action={() => upgradeToBusinessClass(selectedBusinessSeat)}
+              >
+                Upgrade for ${selectedBusinessSeat?.price}
+              </Button>
+            </div>
           </div>
         </div>
-      </div>}
+      )}
     </>
   );
 }

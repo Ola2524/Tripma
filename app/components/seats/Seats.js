@@ -1,6 +1,7 @@
 "use client";
 import styles from "./Seats.module.css";
 import React from "react";
+import { useState } from "react";
 
 export default function Seats({
   businessSeats,
@@ -11,21 +12,23 @@ export default function Seats({
   setSelectedSeats,
   exitDoors,
   setShowBusinessPopup,
+  setSelectedBusinessSeat,
 }) {
-  const toggleSeatSelection = (seat) => {
-    if (seat.class == "business") {
-      setShowBusinessPopup(true);
-    } else {
-      setSelectedSeats((prevSelectedSeats) => {
-        const seatExists = prevSelectedSeats.some((s) => s.id === seat.id);
-        if (seatExists) {
-          return prevSelectedSeats.filter((s) => s.id !== seat.id);
-        } else {
-          return [...prevSelectedSeats, { ...seat, isSelected: true }];
-        }
-      });
-    }
-  };
+  function toggleSeatSelection(seat) {
+    setSelectedSeats((prevSelectedSeats) => {
+      const seatExists = prevSelectedSeats.some((s) => s.id === seat.id);
+      if (!seatExists && seat.class == "business") {
+        setShowBusinessPopup(true);
+        setSelectedBusinessSeat(seat);
+        return [...prevSelectedSeats];
+      }
+      if (seatExists) {
+        return prevSelectedSeats.filter((s) => s.id !== seat.id);
+      } else {
+        return [...prevSelectedSeats, { ...seat, isSelected: true }];
+      }
+    });
+  }
 
   const isExitDoor = (seat) => {
     return exitDoors.some(
