@@ -28,30 +28,6 @@
   left: -878px;
 }
 
-.flight_seats .seats {
-  position: absolute;
-  top: 620px;
-  left: 235px;
-  width: 200px;
-}
-
-.flight_seats .business_class,
-.flight_seats .economy_class {
-  border-radius: 8px;
-  background: #ffffff;
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.flight_seats .business_class {
-  padding: 6px 7px 0;
-}
-
-.flight_seats .economy_class {
-  padding: 6px 4px 0;
-  margin-top: 16px;
-}
-
 .flight_seats .flightRow {
   width: 100%;
   display: flex;
@@ -59,76 +35,6 @@
   justify-content: center;
 }
 
-.flight_seats .rowNum {
-  width: 30px;
-  font-size: 14px;
-  font-weight: 400;
-  text-align: center;
-  color: #7c8db0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.flight_seats .business_class .rowNum {
-  height: 50px;
-}
-
-.flight_seats .economy_class .rowNum {
-  height: 33px;
-}
-
-.flight_seats .seat {
-  cursor: pointer;
-  position: relative;
-  background: #e9e8fc;
-  border-radius: 4px;
-}
-
-.flight_seats .business_class .seat {
-  width: 30px;
-  height: 40px;
-  margin: 6px 4px;
-}
-
-.flight_seats .economy_class .seat {
-  width: 22px;
-  height: 32px;
-  margin: 2px 2.5px;
-}
-
-.flight_seats .seat input {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-  height: 0;
-  width: 0;
-}
-
-.flight_seats .seat:hover {
-  background: rgb(227, 226, 255);
-}
-
-.flight_seats .business_class .seat.available {
-  background: linear-gradient(180deg, #5cd6c0 0%, #22c3a6 100%);
-}
-
-.flight_seats .economy_class .seat.available {
-  background: linear-gradient(180deg, #605dec 0%, #2a26d9 100%);
-}
-
-.flight_seats .seat.selected {
-  background: linear-gradient(180deg, #eb568c 0%, #ed5e76 100%) !important;
-}
-
-.flight_seats .seat.selected::after {
-  content: url("/images/Vector white.png");
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: white;
-}
 
 .booking_details {
   position: fixed;
@@ -341,22 +247,12 @@
   color: #fff !important;
 }
 
-.exit_row {
-  font-size: 12px;
-  font-weight: 600;
-  color: #7c8db0;
-  width: 100%;
-  gap: 3px;
-  display: flex;
-  align-items: center;
-}
-
 .business_class_popup {
   width: 100%;
   height: 100%;
   background: #52527a33;
   z-index: 1000;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
 }

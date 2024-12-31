@@ -7,23 +7,44 @@ import Button from "@/app/components/ui/button/Button";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Seats from "@/app/components/seats/Seats";
 
 export default function Seat() {
   const router = useRouter();
   const [status, setStatus] = useState("departure");
   const [selectedSeats, setSelectedSeats] = useState([]);
+  const [exitDoors, setExitDoors] = useState([]);
+
+  const [businessSeats, setBusinessSeats] = useState([]);
+  const [economySeats, setEconomySeats] = useState([]);
+  const [businessRowNum, setBusinessRowNum] = useState(-1);
+  const [economyRowNum, setEconomyRowNum] = useState(-1);
+
+  const [booking, setBooking] = useState([]);
+
+  const [departureBooking, setDepartureBooking] = useState(null);
+  const [arrivingBooking, setArrivingBooking] = useState(null);
+
   const [departureSelectedSeats, setDepartureSelectedSeats] = useState([]);
   const [arrivingSelectedSeats, setArrivingSelectedSeats] = useState([]);
-  const [bookings, setBookings] = useState([]);
+  const [showBusinessPopup, setShowBusinessPopup] = useState(null);
+
+  // const [booking, setBookings] = useState([]);
   const [passengerInfo, setPassengerInfo] = useState([]);
   const [dataLoaded, setDataLoaded] = useState(false);
 
   useEffect(() => {
-    const bookings = JSON.parse(localStorage.getItem("bookings"));
+    const booking = JSON.parse(localStorage.getItem("booking"));
     const passengerInfo = JSON.parse(localStorage.getItem("passengerInfo"));
 
-    if (bookings) {
-      setBookings(...bookings);
+    if (booking) {
+      if (booking.length > 1) {
+        setDepartureBooking(booking[0]);
+        setArrivingBooking(booking[1]);
+      } else {
+        setDepartureBooking(booking[0]);
+      }
+      setBooking(booking[0]);
     }
 
     if (passengerInfo) {
@@ -32,175 +53,159 @@ export default function Seat() {
     setDataLoaded(true);
   }, []);
 
-  const toggleSeatSelection = (seat) => {
-    setSelectedSeats((prevSelectedSeats) => {
-      const seatExists = prevSelectedSeats.find(
-        (s) => s.row === seat.row && s.seat === seat.seat
-      );
-      if (seatExists) {
-        return prevSelectedSeats.filter(
-          (s) => !(s.row === seat.row && s.seat === seat.seat)
-        );
-      } else {
-        return [...prevSelectedSeats, seat];
+  useEffect(() => {
+    if (booking && booking?.id) {
+      async function fetchSeats() {
+        try {
+          const response = await fetch(
+            `/api/seats?flight_id=${parseInt(booking?.id)}`
+          );
+          const data = await response.json();
+          setBusinessSeats(() => {
+            return data.filter((seat) => seat.class === "business");
+          });
+          setEconomySeats(() => {
+            return data.filter((seat) => seat.class === "economy");
+          });
+        } catch (error) {
+          console.error("Fetch Error:", error);
+        } finally {
+          setDataLoaded(true);
+        }
       }
-    });
-  };
+
+      async function fetchDoors() {
+        try {
+          const response = await fetch(
+            `/api/exit_doors?flight_id=${parseInt(booking?.id)}`
+          );
+          const data = await response.json();
+          setExitDoors(data)
+        } catch (error) {
+          console.error("Fetch Error:", error);
+        } finally {
+          setDataLoaded(true);
+        }
+      }
+
+      fetchSeats();
+      fetchDoors();
+    }
+  }, [booking]);
+
+  useEffect(() => {
+    setBusinessRowNum(() =>
+      businessSeats.findIndex(
+        (seat) => seat.x_coordinate === 2 && seat.y_coordinate === 1
+      )
+    );
+
+    setEconomyRowNum(() =>
+      economySeats.findIndex(
+        (seat) =>
+          seat.x_coordinate ==
+            businessSeats[businessSeats.length - 1].x_coordinate + 2 &&
+          seat.y_coordinate == 1
+      )
+    );
+  }, [businessSeats, economySeats]);
 
   function handleFlightBooking() {
-    if (status == "departure") {
+    if (departureBooking?.tripType == "round_trip") {
+      if (status == "departure") {
+        setDepartureSelectedSeats(selectedSeats);
+        setSelectedSeats([]);
+        setStatus("arriving");
+      } else if (status == "arriving") {
+        setArrivingSelectedSeats(selectedSeats);
+        router.push(`/user/payment`);
+      }
+    } else {
       setDepartureSelectedSeats(selectedSeats);
-      setSelectedSeats([]);
-      setStatus("arriving");
-    } else if (status == "arriving") {
-      setArrivingSelectedSeats(selectedSeats);
       router.push(`/user/payment`);
     }
   }
 
-  // function handleDeparture() {
-  //   setDepartureSelectedSeats(selectedSeats);
-  //   setSelectedSeats(null);
-  //   setStatus("arriving");
-  // }
-
-  // function handleArriving() {
-  //   if (selectedSeats) {
-  //     setArrivingSelectedSeats(selectedSeats);
-  //     router.push(`/user/payment`);
-  //   }
-  // }
-
   return (
     <>
       <div className={styles.flight_seats}>
-        <img
+        <Image
           src="/images/Plane (seat selection).png"
           alt="flight"
+          width={2426}
+          height={2965}
           className={styles.flight_img}
         />
-        <div className={styles.seats}>
-          <div className={styles.business_class}>
-            {[...Array(5)].map((_, row) => {
-              console.log(`rowNum-${row}`);
-              row++;
-              return (
-                <div className={styles.flightRow} key={`rowNum-${row}`}>
-                  {[...Array(5)].map((_, seat) => {
-                    let seatNum = seat;
-                    const isRowStart = seatNum === 2;
-                    if (isRowStart) {
-                      seatNum--;
-                    }
-                    return (
-                      <div key={`${row}-${seat}`}>
-                        {isRowStart ? (
-                          <div className={styles.rowNum}>{row}</div>
-                        ) : (
-                          <label
-                            // className={`${styles.seat} ${
-                            //   selectedSeats?.row === row &&
-                            //   selectedSeats?.seat.charCodeAt(0) - 65 === seatNum
-                            //     ? styles.selected
-                            //     : styles.available
-                            // }`}
-                            onClick={toggleSeatSelection}
-                            htmlFor={`${row}-${seat}`}
-                          >
-                            <input
-                              type="checkbox"
-                              name="seat"
-                              id={`${row}-${seat}`}
-                            />
-                          </label>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-              );
-            })}
-            {/* <div className={`${styles.seat} ${styles.available}`}></div> */}
-          </div>
-          <div className={styles.economy_class}>
-            {[...Array(28)].map((_, row) => {
-              const rowNum = row + 6;
-              return (
-                <div className={styles.flightRow} key={`rowNum-${row}`}>
-                  {/* <div className={styles.exit_row}>
-                    <img src="/images/information.svg" alt="info icon" />
-                    <span>Exit row</span>
-                  </div> */}
-                  {[...Array(7)].map((_, seat) => {
-                    let seatNum = seat++;
-                    const isRowStart = seat === 4;
-                    if (isRowStart) {
-                      seatNum--;
-                    }
-                    return (
-                      <div key={`${row}-${seat}`}>
-                        {isRowStart ? (
-                          <div className={styles.rowNum}>{rowNum}</div>
-                        ) : (
-                          <label
-                          
-                            // className={`${styles.seat} ${
-                            //   selectedSeats?.row === rowNum &&
-                            //   selectedSeats?.seat.charCodeAt(0) - 65 === seatNum
-                            //     ? styles.selected
-                            //     : styles.available
-                            // }`}
-                            key={`${row}-${seat}`}
-                            onClick={() =>
-                              setSelectedSeats({ toggleSeatSelection })
-                            }
-                            htmlFor={`${row}-${seat}`}
-                          >
-                            <input
-                              type="checkbox"
-                              name="seat"
-                              id={`${row}-${seat}`}
-                            />
-                          </label>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-              );
-            })}
-          </div>
-        </div>
+
+        <Seats
+          businessSeats={businessSeats}
+          businessRowNum={businessRowNum}
+          economySeats={economySeats}
+          economyRowNum={economyRowNum}
+          selectedSeats={selectedSeats}
+          setSelectedSeats={setSelectedSeats}
+          exitDoors={exitDoors}
+          setShowBusinessPopup={setShowBusinessPopup}
+        />
       </div>
       <div className={styles.booking_details}>
         <header>
           <div>
-            <h4>{bookings.from}</h4>
-            <p>
-              {bookings.from_city}, {bookings.from_country}
-            </p>
+            {departureBooking?.tripType == "round_trip" &&
+            status == "arriving" ? (
+              <>
+                <h4>{arrivingBooking?.from}</h4>
+                <p>
+                  {arrivingBooking?.from_city}, {arrivingBooking?.from_country}
+                </p>
+              </>
+            ) : (
+              <>
+                <h4>{departureBooking?.from}</h4>
+                <p>
+                  {departureBooking?.from_city},{" "}
+                  {departureBooking?.from_country}
+                </p>
+              </>
+            )}
           </div>
           <FontAwesomeIcon icon={faArrowRight} className={styles.arrow_icon} />
           <div>
-            <h4>{bookings.to}</h4>
-            <p>
-              {bookings.to_city}, {bookings.to_country}
-            </p>
+            {departureBooking?.tripType == "round_trip" &&
+            status == "arriving" ? (
+              <>
+                <h4>{arrivingBooking?.to}</h4>
+                <p>
+                  {arrivingBooking?.to_city}, {arrivingBooking?.to_country}
+                </p>
+              </>
+            ) : (
+              <>
+                <h4>{departureBooking?.to}</h4>
+                <p>
+                  {departureBooking?.to_city}, {departureBooking?.to_country}
+                </p>
+              </>
+            )}
           </div>
           <div
             className={status == "departure" ? styles.active_tab : undefined}
           >
             <h5>
-              {bookings.startDate} | {bookings.departure_time}
+              {departureBooking?.startDate} | {departureBooking?.departure_time}
             </h5>
             <p>Departing</p>
           </div>
-          <div className={status == "arriving" ? styles.active_tab : undefined}>
-            <h5>
-              {bookings.endDate} | {bookings.return_time}
-            </h5>
-            <p>Arriving</p>
-          </div>
+          {departureBooking?.tripType == "round_trip" && (
+            <div
+              className={status == "arriving" ? styles.active_tab : undefined}
+            >
+              <h5>
+                {arrivingBooking?.endDate} | {arrivingBooking?.return_time}
+              </h5>
+              <p>Arriving</p>
+            </div>
+          )}
         </header>
         <div className={styles.seat_classes}>
           <div className={styles.economy}>
@@ -284,7 +289,8 @@ export default function Seat() {
                 // }`}
                 action={handleFlightBooking}
               >
-                {status == "arriving" && selectedSeats.length > 0
+                {departureBooking.tripType == "one_way" ||
+                (status == "arriving" && selectedSeats.length > 0)
                   ? "Payment method"
                   : "Next flight"}
               </Button>
@@ -292,7 +298,7 @@ export default function Seat() {
           </div>
         )}
       </div>
-      {/* <div className={styles.business_class_popup}>
+        {showBusinessPopup&&<div className={styles.business_class_popup}>
         <div className={styles.message}>
           <h3>Upgrade seat</h3>
           <p>
@@ -304,7 +310,7 @@ export default function Seat() {
           <Button type="button">Upgrade for $199</Button>
           </div>
         </div>
-      </div> */}
+      </div>}
     </>
   );
 }

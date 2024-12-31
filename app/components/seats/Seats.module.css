@@ -1,0 +1,105 @@
+.seats {
+  position: absolute;
+  top: 620px;
+  left: 235px;
+  width: 200px;
+}
+
+.business_class,
+.economy_class {
+  border-radius: 8px;
+  background: #ffffff;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.business_class {
+  padding: 6px 7px 0;
+}
+
+.economy_class {
+  padding: 6px 4px 0;
+  margin-top: 16px;
+}
+
+.rowNum {
+  width: 30px;
+  font-size: 14px;
+  font-weight: 400;
+  text-align: center;
+  color: #7c8db0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.business_class .rowNum {
+  height: 50px;
+}
+
+.economy_class .rowNum {
+  height: 45px;
+}
+
+.seat {
+  cursor: pointer;
+  position: relative;
+  background: #e9e8fc;
+  border-radius: 4px;
+}
+
+.business_class .seat {
+  width: 30px;
+  height: 40px;
+  margin: 6px 4px;
+}
+
+.economy_class .seat {
+  width: 22px;
+  height: 32px;
+  margin: 6.5px 2.5px;
+}
+
+.seat input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.seat:hover {
+  background: rgb(227, 226, 255);
+}
+
+.business_class .seat.available {
+  background: linear-gradient(180deg, #5cd6c0 0%, #22c3a6 100%);
+}
+
+.economy_class .seat.available {
+  background: linear-gradient(180deg, #605dec 0%, #2a26d9 100%);
+}
+
+.seat.selected {
+  background: linear-gradient(180deg, #eb568c 0%, #ed5e76 100%) !important;
+}
+
+.seat.selected::after {
+  content: url("/images/Vector white.png");
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+}
+
+.exit_row {
+  font-size: 12px;
+  font-weight: 600;
+  color: #7c8db0;
+  width: 100%;
+  gap: 3px;
+  display: flex;
+  align-items: center;
+  padding: 4px 0;
+}

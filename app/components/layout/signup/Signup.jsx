@@ -15,11 +15,6 @@ export default function Signup({ setShowSignupForm, status }) {
   async function handleAuthentication(e) {
     e.preventDefault();
 
-    if (!emailOrPhone || !password) {
-      alert("Email/Phone and password are required");
-      return;
-    }
-
     if (status === "signin") {
       signIn("credentials", { redirect: false, emailOrPhone, password });
       setShowSignupForm(false)
@@ -102,7 +97,7 @@ export default function Signup({ setShowSignupForm, status }) {
           </button>
           <div className={styles.divider}>or</div>
           <div className={styles.signup_links}>
-            <Link href="#">
+            <button type="button" className={styles.thirdPartSignIn} onClick={() => signIn("google", { callbackUrl: "/" })}>
               <Image
                 src="/images/google.png"
                 alt="Google"
@@ -110,8 +105,8 @@ export default function Signup({ setShowSignupForm, status }) {
                 height={18}
               />
               Continue with Google
-            </Link>
-            <Link href="#">
+            </button>
+            <button className={styles.thirdPartSignIn}>
               <Image
                 src="/images/apple mac.png"
                 alt="Apple"
@@ -119,8 +114,8 @@ export default function Signup({ setShowSignupForm, status }) {
                 height={18}
               />
               Continue with Apple
-            </Link>
-            <Link href="#">
+            </button>
+            <button className={styles.thirdPartSignIn}>
               <Image
                 src="/images/facebook.png"
                 alt="Facebook"
@@ -128,7 +123,7 @@ export default function Signup({ setShowSignupForm, status }) {
                 height={18}
               />
               Continue with Facebook
-            </Link>
+            </button>
           </div>
         </form>
       </div>

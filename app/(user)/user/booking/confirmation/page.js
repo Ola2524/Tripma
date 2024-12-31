@@ -15,7 +15,7 @@ export default function Confirmation() {
   const [dataLoaded, setDataLoaded] = useState(false);
   const [emailFieldNum, setEmailFieldNum] = useState(0);
   useEffect(() => {
-    const booking = JSON.parse(localStorage.getItem("bookings"));
+    const booking = JSON.parse(localStorage.getItem("booking"));
     const passengerInfo = JSON.parse(localStorage.getItem("passengerInfo"));
 
     if (booking) {

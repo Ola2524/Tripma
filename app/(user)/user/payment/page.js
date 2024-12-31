@@ -7,13 +7,13 @@ import { useState, useEffect } from "react";
 
 export default function Payment() {
   const [dataLoaded, setDataLoaded] = useState(false);
-  const [bookings, setBookings] = useState([]);
+  const [booking, setBookings] = useState([]);
   const [paymentInfo, setPaymentInfo] = useState([]);
   useEffect(() => {
-    const bookings = JSON.parse(localStorage.getItem("bookings"));
+    const booking = JSON.parse(localStorage.getItem("booking"));
     const paymentInfo = JSON.parse(localStorage.getItem("paymentInfo"));
-    if (bookings) {
-      setBookings(bookings);
+    if (booking) {
+      setBookings(booking);
     }
 
     if (paymentInfo) {
@@ -60,7 +60,7 @@ export default function Payment() {
             <PaymentForm paymentInfo={paymentInfo.length > 0 && paymentInfo} />
           </div>
           <div style={{ width: "400px" }}>
-            <Invoice booking={bookings}>
+            <Invoice booking={booking}>
               <Button type="submit" className={styles.submitBtn}>
                 Confirm and pay
               </Button>

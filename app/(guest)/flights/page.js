@@ -71,7 +71,7 @@ export default function Filter() {
         if (selectedFlight) {
           setBooking((booking) => [
             ...booking,
-            { ...selectedFlight, adults, minors },
+            { ...selectedFlight, adults, minors, tripType },
           ]);
         }
       } else if (tripType == "one_way") {
@@ -79,7 +79,7 @@ export default function Filter() {
           return flight.id === selectedFlightID;
         });
         if (selectedFlight) {
-          setBooking(() => [{ ...selectedFlight, adults, minors }]);
+          setBooking(() => [{ ...selectedFlight, adults, minors, tripType }]);
         }
       }
       setSelectedFlightID(null);

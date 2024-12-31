@@ -123,7 +123,7 @@
   right: 0;
 }
 
-.signup .signup_links a {
+.signup .signup_links .thirdPartSignIn {
   font-size: 18px;
   font-weight: 400;
   line-height: 48px;
@@ -135,9 +135,12 @@
   height: 48px;
   margin-top: 12px;
   border-radius: 4px;
+  background-color: transparent;
+  width: 100%;
+  cursor: pointer
 }
 
-.signup .signup_links a img {
+.signup .signup_links .thirdPartSignIn img {
   position: absolute;
   top: 50%;
   left: 20px;
